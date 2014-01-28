@@ -1,0 +1,46 @@
+ <CENTER><u><h1>WELCOME TO EMPLOYEES ATTENDENCE TRACKING SYSTEM</h1></u></CENTER>
+<center>
+<%= form_tag(controller: "session", action: "login", method: "post") do %>
+      <tr>
+      <b><%= label_tag(:username, "username:") %></b>
+      <%= text_field_tag(:username) %>
+       </tr>
+       <tr>
+       <%= submit_tag("Login") %>
+       </tr>
+<% end %>
+
+</center>
+
+<center><h2><font color="red"><p id="notice"><%= notice %></font><h2></p></center>
+
+<br>
+<br>
+ 
+<h3><p align="right"><%= link_to 'Analytics', analytics_path %></align></h3>
+<h3><p align="right"><%= link_to 'Statistics', statistics_path %></align></h3>
+ 
+<h4>LOGGED EMPLOYEES</h4>
+
+<table border=1>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Role</th>
+      <th>ArrivalTime</th>
+          </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to "#{user.username}", :action =>"each_user_analytics", :id=> user.id %></td>
+        <td><%= user.role %></td>
+        <td><%= user.user_times.last.arrival_time.in_time_zone("Mumbai") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<p><%= will_paginate @users %></p>

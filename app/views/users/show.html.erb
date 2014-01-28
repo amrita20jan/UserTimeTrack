@@ -1,0 +1,18 @@
+<h2><b><i><%= "Welcome #{@user.username}" %> </br> </br></br></i></b></h2>
+
+
+
+       <%a=Time.now.in_time_zone('Mumbai')%>
+       
+             <%if (10<=a.hour)&&(00==a.min)%> 
+				<%= " You Logged at right time  : #{a}"%> 
+		     <%else%>
+				<h2><font color="red"><%= "You Logged late  : #{a}"%></font><h2>
+		   	 <%end%>
+		   	
+<% #arrival_time= Time.now %>
+
+            
+
+
+<%= button_to "Logout" ,{:action=> "logout" , :controller =>"session",:method=>"post"} %>

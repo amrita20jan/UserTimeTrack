@@ -1,0 +1,23 @@
+<h2><b><i><%= "Welcome to #{@user.username} Attendence Tracking System !!"%></i></b></h2>
+  
+  <table border=1>
+  <thead>
+    <tr>
+    <th><font color="blue">Yours Arrival Time :</font></th>
+    </tr>  
+   </thead>
+   <tbody>  
+   	  <tr>
+
+	  <% @user.user_times.each do |c|%>
+	  <td><%=c.arrival_time.in_time_zone("Mumbai")%></td>
+	  
+	</tr>
+  <%end%>
+   </tbody>
+</table>
+
+  </br><h2><b><i><font color="blue"><%= "Average Time of your is #{@each_user_average}"%></font></i></b></h2>
+
+    </br><h2><b><i><font color="blue"><%= "The Time when you enter in office usually around .. #{@user_max_arrival_time}"%></font></i></b></h2>
+

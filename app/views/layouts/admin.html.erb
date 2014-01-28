@@ -1,0 +1,36 @@
+<%= yield%>
+<i>Welcome Admin</i><br><br>
+      <% @users = User.all%>
+
+
+	<table border="2">
+		<tr>
+     
+    <th>User Name</th>
+    <th>Late arrivals</th>
+    <th>Delete</th>
+    <th></th>
+  </tr>
+     <% @users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+            <%count=0%>
+        <td><% user.user_times.each do|e|%>
+            <% a=e.arrival_time.in_time_zone("Mumbai").strftime("%H")%>
+            <%count=count+1 if a.to_i>=11%>
+            <%end%>
+            <%= count %>
+        </td>
+        <td><%= button_to "Delete" ,{:action=> "destroy",:controller =>"users",:id=>user.id},:method=>"delete" %></td></tr>
+            <% end %>
+</table>
+<br>
+<br>
+OTHER ADMIN FUNCTIONALITIES :
+
+<table border="0">
+		<tr>
+<th><h5><p align="right"><%= link_to 'Create NewUser', new_user_path %></align></h5></th></tr>
+<tr><th><%= button_to "Logout" ,{:action=> "logout" , :controller =>"session",:method=>"post"} %></th><tr>
+
+
