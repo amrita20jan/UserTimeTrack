@@ -1,3 +1,4 @@
+require 'gchart'
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -64,7 +65,10 @@ class UsersController < ApplicationController
 
   def analytics
     @average_time= avg(UserTime.all.where("date(arrival_time)=?",DateTime.now.to_date).map{|e|e.arrival_time.in_time_zone('Mumbai').strftime("%H:%M")})
-     @all_user_max_arrival_time=max_arrival_time(UserTime.all.where("date(arrival_time)=?",DateTime.now.to_date).map{|e|e.arrival_time.in_time_zone('Mumbai').strftime("%H")})
+    @all_user_max_arrival_time=max_arrival_time(UserTime.all.where("date(arrival_time)=?",DateTime.now.to_date).map{|e|e.arrival_time.in_time_zone('Mumbai').strftime("%H")})
+    @image_url=Gchart.line(:data => UserTime.all.where("date(arrival_time)=?",DateTime.now.to_date).map{|e|e.arrival_time.in_time_zone('Mumbai').strftime("%H:%M").to_i})
+
+
   end
 
    # def avg_times(var)
@@ -101,7 +105,10 @@ class UsersController < ApplicationController
      #return @each_user
      @each_user_average=avg(@user.user_times.map{|c|c.arrival_time.in_time_zone("Mumbai").strftime("%H:%M")})
      @user_max_arrival_time=max_arrival_time(@user.user_times.map{|c|c.arrival_time.in_time_zone("Mumbai").strftime("%H")})
+     @image_url=Gchart.pie_3d(:data => @user.user_times.map{|c|c.arrival_time.in_time_zone("Mumbai").strftime("%H").to_i})
+
    end
+
    
    def max_arrival_time(var)
       freq=var.inject(Hash.new(0)){|h,v| h[v]+=1;h}
@@ -110,8 +117,9 @@ class UsersController < ApplicationController
    end
 
    def statistics
-      
+      #@user=User.find(params[:id])
       @users = User.all
+
       #@user=User.find(params[:id])
       # @res=@users.map do|user|
       #     @avg_state=avg_times(user.user_times.map{|e|e.arrival_time.in_time_zone("Mumbai").strftime("%H:%M")})

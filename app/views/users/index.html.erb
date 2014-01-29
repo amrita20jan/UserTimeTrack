@@ -33,11 +33,14 @@
 
   <tbody>
     <% @users.each do |user| %>
+    <% if user.user_times.present? %>
       <tr>
         <td><%= link_to "#{user.username}", :action =>"each_user_analytics", :id=> user.id %></td>
         <td><%= user.role %></td>
-        <td><%= user.user_times.last.arrival_time.in_time_zone("Mumbai") %></td>
+
+        <td><%= user.user_times.last.arrival_time.in_time_zone("Mumbai")  %></td>
       </tr>
+      <%end%>
     <% end %>
   </tbody>
 </table>

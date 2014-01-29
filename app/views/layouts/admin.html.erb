@@ -26,6 +26,12 @@
 </table>
 <br>
 <br>
+
+<h2><b><i><%= "Pie Chart of average employee for each employee" %></i></b></h2> 
+<%= image_tag Gchart.pie_3d(:size => '400x200', :data =>UserTime.all.where("date(arrival_time)=?",DateTime.now.to_date).map{|e|e.arrival_time.in_time_zone('Mumbai').strftime("%H:%M").to_i}, :labels => ["DHH", "Rob", "Matt","1","2","3"] ) %>
+
+
+<br>
 OTHER ADMIN FUNCTIONALITIES :
 
 <table border="0">

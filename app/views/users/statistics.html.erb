@@ -5,6 +5,7 @@
       <th>Number Of Late Arrivals</th>
       <th> Arrival Time</th>
       <th>Average Arrival Time</th>
+      <th>Chart for Arrival Time</th>
       <th>Bonus</th>
 
     </tr>
@@ -13,20 +14,30 @@
   <tbody>
        <% @users.sort_by!{|m|m.username.downcase} %>
         <% @users.each do |user| %>
+        <% if user.user_times.present? %>
       <tr>
         <td><%= user.username %></td>
             <%count=0%>
         <td><% user.user_times.each do|e|%>
             <% a=e.arrival_time.in_time_zone("Mumbai").strftime("%H")%>
             <%count=count+1 if a.to_i>=11%>
-            <%end%>
+          <%end%>
+
              <%= count %>
         </td>
        
         <td><%= user.user_times.map{|g|g.arrival_time.in_time_zone("Mumbai").strftime("%H")}  %> </td>
-        <td><%= user.avg(user.user_times.map{|k|k.arrival_time.in_time_zone("Mumbai").strftime("%H:%M")})%></td>
+        <td><%= user.avg(user.user_times.map{|k|k.arrival_time.in_time_zone("Mumbai").strftime("%H:%M")})          %></td>
+        <td>   <%= image_tag Gchart.line(:data => user.user_times.map{|g|g.arrival_time.in_time_zone("Mumbai").strftime("%H").to_i}) %>
+        </td>
+
         <td></td>
+
         <%end%>
+        <%end%>
+
   </tbody>
 </table>
+
 <br>
+
